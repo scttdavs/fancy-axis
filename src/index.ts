@@ -1,5 +1,6 @@
 // import { selectAll } from "d3-selection";
-// import { Axis } from "d3-axis";
+import { Axis } from "d3-axis";
+import { ScaleContinuousNumeric } from "d3-scale";
 // import { max } from "d3-array";
 
 // # axis.tickPadding([padding]) <>
@@ -11,7 +12,7 @@
 
 // axis: axis you want to make fancy
 // data: array of only the data you want to make fancy for that axis
-// const fancy = (axis: Axis<any>, data: any[]) => {
+// const axisBarPlot = (axis: Axis<any>, data: any[]) => {
     // const ticks = selectAll(tickSelector);
 
     // const scale = axis.scale();
@@ -25,13 +26,28 @@
     
 // };
 
+enum AxisType {
+    LEFT,
+    BOTTOM
+}
 
-const stripChart = () => {
-    // axis.tickPadding()
-    return 42;
+const axisRugPlot = (axis: Axis<any>, type: AxisType, data: any[]) => {
+    const scale = axis.scale() as ScaleContinuousNumeric<any, any>;
+    const [currMinRange, currMaxRange] = scale.range();
+
+    let newRange: [number, number];
+    if (type === AxisType.LEFT) {
+        newRange = [currMinRange - 20, currMaxRange + 20];
+        // newRange = [currMinRange, currMaxRange];
+    } else {
+        newRange = [currMinRange + 20, currMaxRange - 20];
+        // newRange = [currMinRange, currMaxRange];
+    }
+    scale.range(newRange); 
 };
 
 export default {
-    stripChart,
-    // fancy,
+    AxisType,
+    axisRugPlot,
+    // axisBarPlot,
 };
