@@ -1,49 +1,63 @@
 // import { selectAll } from "d3-selection";
 import { Axis } from "d3-axis";
+import { Selection } from 'd3-selection';
 import { ScaleContinuousNumeric } from "d3-scale";
-// import { max } from "d3-array";
-
-// # axis.tickPadding([padding]) <>
-// If padding is specified, sets the padding to the specified value in pixels and returns the axis. If padding is not specified, returns the current padding which defaults to 3 pixels.
-
-// 1. update padding on axis with max widths/values
-// 2. draw dots (circles)
-// 3. config?
-
-// axis: axis you want to make fancy
-// data: array of only the data you want to make fancy for that axis
-// const axisBarPlot = (axis: Axis<any>, data: any[]) => {
-    // const ticks = selectAll(tickSelector);
-
-    // const scale = axis.scale();
-    // const maxValue = max(data);
-    // ticks
-    //     //in the rest of the method calls:
-    //     .select('line') //grab the tick line
-    //     .attr('class', 'quadrantBorder') //style with a custom class and CSS
-    //     .style('stroke-width', 5);
-
-    
-// };
 
 enum AxisType {
     LEFT,
     BOTTOM
 }
 
-const axisRugPlot = (axis: Axis<any>, type: AxisType, data: any[]) => {
+type AxisContent = Selection<SVGSVGElement, any, any, any> | Selection<SVGGElement, any, any, any>
+
+type RugPlotOptions = {
+    width: number
+}
+
+const defaultRugPlotOptions: RugPlotOptions = {
+    width: 10
+}
+
+const axisRugPlot = (axis: Axis<any>, type: AxisType, data: any[], options: RugPlotOptions) => {
     const scale = axis.scale() as ScaleContinuousNumeric<any, any>;
     const [currMinRange, currMaxRange] = scale.range();
 
+    const { width } = (<any>Object).assign({}, defaultRugPlotOptions, options);
+
+    // add padding between the axis and data for our rug plot to exist
     let newRange: [number, number];
     if (type === AxisType.LEFT) {
-        newRange = [currMinRange - 20, currMaxRange + 20];
-        // newRange = [currMinRange, currMaxRange];
+        newRange = [currMinRange - width * 2, currMaxRange + width * 2];
     } else {
-        newRange = [currMinRange + 20, currMaxRange - 20];
-        // newRange = [currMinRange, currMaxRange];
+        newRange = [currMinRange + width * 2, currMaxRange - width * 2];
     }
-    scale.range(newRange); 
+    scale.range(newRange);
+
+    return (context: AxisContent) => {
+        let rugValue: number;
+        if (type === AxisType.LEFT) {
+            rugValue = newRange[1];
+        } else {
+            rugValue = newRange[0];
+        }
+        const rug = context
+            .append("g")
+            .attr("opacity", 1)
+            .attr("class", "fancy-axis-rug-plot")
+
+        data.forEach((d) => {
+            rug
+                .append("line")
+                .attr("y1", scale(d))
+                .attr("x2", rugValue - width)
+                .attr("y2", scale(d))
+                .attr("class", "rug")
+                .style('stroke', 'currentColor')
+        });
+
+        // proxy through the content to the original axis;
+        axis(context);
+    }
 };
 
 export default {
