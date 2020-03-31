@@ -69,8 +69,8 @@
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             // 3. Call the x axis in a group tag
-            const bottomAxis = d3.axisBottom(xScale);
-            fa.axisRugPlot(bottomAxis, fa.AxisType.BOTTOM);
+            let bottomAxis = d3.axisBottom(xScale);
+            bottomAxis = fa.axisRugPlot(bottomAxis, fa.AxisType.BOTTOM, dataset.map((d, i) => i));
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")

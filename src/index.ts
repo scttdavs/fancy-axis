@@ -1,4 +1,4 @@
-// import { selectAll } from "d3-selection";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Axis } from "d3-axis";
 import { Selection } from 'd3-selection';
 import { ScaleContinuousNumeric } from "d3-scale";
@@ -11,18 +11,23 @@ enum AxisType {
 type AxisContent = Selection<SVGSVGElement, any, any, any> | Selection<SVGGElement, any, any, any>
 
 type RugPlotOptions = {
-    width: number
+    width?: number;
 }
 
 const defaultRugPlotOptions: RugPlotOptions = {
     width: 10
 }
 
-const axisRugPlot = (axis: Axis<any>, type: AxisType, data: any[], options: RugPlotOptions) => {
+const axisRugPlot = (
+        axis: Axis<any>,
+        type: AxisType,
+        data: any[] = [],
+        options: RugPlotOptions = {}
+    ): (context: AxisContent) => void => {
     const scale = axis.scale() as ScaleContinuousNumeric<any, any>;
     const [currMinRange, currMaxRange] = scale.range();
 
-    const { width } = (<any>Object).assign({}, defaultRugPlotOptions, options);
+    const { width } = (Object as any).assign({}, defaultRugPlotOptions, options);
 
     // add padding between the axis and data for our rug plot to exist
     let newRange: [number, number];
@@ -33,13 +38,23 @@ const axisRugPlot = (axis: Axis<any>, type: AxisType, data: any[], options: RugP
     }
     scale.range(newRange);
 
-    return (context: AxisContent) => {
-        let rugValue: number;
+    return (context: AxisContent): void => {
+        let y1: (d: any) => number;
+        let y2: (d: any) => number;
+        let x1: (d: any) => number;
+        let x2: (d: any) => number;
+        const passThrough: (d: any) => number = (d: any) => scale(d);
+
         if (type === AxisType.LEFT) {
-            rugValue = newRange[1];
+            x1 = (): number => newRange[1] - width * 2;
+            x2 = (): number => newRange[1] - width;
+            y1 = y2 = passThrough;
         } else {
-            rugValue = newRange[0];
+            x1 = x2 = passThrough;
+            y1 = (): number => newRange[0] - width * 3;
+            y2 = (): number => newRange[0] - width * 2;
         }
+
         const rug = context
             .append("g")
             .attr("opacity", 1)
@@ -48,9 +63,10 @@ const axisRugPlot = (axis: Axis<any>, type: AxisType, data: any[], options: RugP
         data.forEach((d) => {
             rug
                 .append("line")
-                .attr("y1", scale(d))
-                .attr("x2", rugValue - width)
-                .attr("y2", scale(d))
+                .attr("y1", y1(d))
+                .attr("x1", x1(d))
+                .attr("y2", y2(d))
+                .attr("x2", x2(d))
                 .attr("class", "rug")
                 .style('stroke', 'currentColor')
         });
