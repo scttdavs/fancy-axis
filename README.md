@@ -10,14 +10,14 @@ This is a package to draw fancier axis' in D3 for your graphs, based on the visu
 
 ```ts
 import * as d3 from "d3";
-import { axisRugPlot, AxisType } from "fancy-axis";
+import { leftAxisRugPlot } from "fancy-axis";
 
 // create your scale..
 
 // dataset is like [{y: ... }, ...]
 
 let leftAxis = d3.axisLeft(yScale);
-leftAxis = axisRugPlot(leftAxis, AxisType.LEFT, dataset.map(d => d.y));
+leftAxis = leftAxisRugPlot(leftAxis, dataset.map(d => d.y));
 
 svg.append("g")
     .attr("class", "y axis")
@@ -28,7 +28,7 @@ You will need to do both axis for it to display correctly. If you do not want th
 
 ```js
 let bottomAxis = d3.axisBottom(xScale);
-bottomAxis = axisRugPlot(bottomAxis, AxisType.BOTTOM);
+bottomAxis = bottomAxisRugPlot(bottomAxis, AxisType.BOTTOM);
 ```
 
 And it will not render the data, but the padding will be correct.

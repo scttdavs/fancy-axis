@@ -84,8 +84,21 @@ const axisRugPlot = (
     }
 };
 
+const leftAxisRugPlot = (
+    axis: Axis<any>,
+    data: any[] = [],
+    options: RugPlotOptions = {}
+) => axisRugPlot(axis, AxisType.LEFT, data, options);
+
+const bottomAxisRugPlot = (
+    axis: Axis<any>,
+    data: any[] = [],
+    options: RugPlotOptions = {}
+) => axisRugPlot(axis, AxisType.BOTTOM, data, options);
+
 export default {
     AxisType,
-    axisRugPlot,
+    leftAxisRugPlot,
+    bottomAxisRugPlot
     // axisBarPlot,
 };
