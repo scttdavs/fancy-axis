@@ -24,9 +24,13 @@
   },
   "homepage": "https://github.com/scttdavs/fancy-axis#readme",
   "dependencies": {
-    "d3-axis": "^1.0.12"
+    "d3-array": "^2.4.0",
+    "d3-axis": "^1.0.12",
+    "d3-selection": "^1.4.1"
   },
   "devDependencies": {
+    "@types/d3-array": "^2.0.0",
+    "@types/d3-axis": "^1.0.12",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "eslint": "^6.8.0",
