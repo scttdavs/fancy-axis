@@ -18,6 +18,14 @@ const defaultRugPlotOptions: RugPlotOptions = {
     width: 10
 }
 
+/*
+
+TODOS:
+- generate random data that looks nice
+- create bl.ocks.org gist?
+
+*/
+
 const axisRugPlot = (
         axis: Axis<any>,
         type: AxisType,
