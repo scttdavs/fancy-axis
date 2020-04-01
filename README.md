@@ -24,11 +24,11 @@ svg.append("g")
     .call(leftAxis); // Create an axis component with d3.axisLeft
 ```
 
-You will need to do both axis for it to display correctly. If you do not want the rug plot on the other axis, you can do the following:
+You will need to do both axes for it to display correctly. If you do not want the rug plot on the other axis, you can do the following:
 
 ```js
 let bottomAxis = d3.axisBottom(xScale);
-bottomAxis = bottomAxisRugPlot(bottomAxis, AxisType.BOTTOM);
+bottomAxis = bottomAxisRugPlot(bottomAxis);
 ```
 
 And it will not render the data, but the padding will be correct.
