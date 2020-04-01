@@ -78,7 +78,7 @@
 
             // 4. Call the y axis in a group tag
             let leftAxis = d3.axisLeft(yScale);
-            leftAxis = fa.leftAxisRugPlot(leftAxis, dataset.map(d => d.y));
+            leftAxis = fa.leftAxisRugPlot(leftAxis, dataset.map(d => d.y), { color: "rgba(0,0,0,0.1)" });
             svg.append("g")
                 .attr("class", "y axis")
                 .call(leftAxis); // Create an axis component with d3.axisLeft

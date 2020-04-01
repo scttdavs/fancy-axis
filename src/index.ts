@@ -12,10 +12,12 @@ type AxisContent = Selection<SVGSVGElement, any, any, any> | Selection<SVGGEleme
 
 type RugPlotOptions = {
     width?: number;
+    color?: string;
 }
 
 const defaultRugPlotOptions: RugPlotOptions = {
-    width: 10
+    width: 10,
+    color: 'currentColor',
 }
 
 /*
@@ -27,15 +29,15 @@ TODOS:
 */
 
 const axisRugPlot = (
-        axis: Axis<any>,
         type: AxisType,
+        axis: Axis<any>,
         data: any[] = [],
         options: RugPlotOptions = {}
     ): (context: AxisContent) => void => {
     const scale = axis.scale() as ScaleContinuousNumeric<any, any>;
     const [currMinRange, currMaxRange] = scale.range();
 
-    const { width } = (Object as any).assign({}, defaultRugPlotOptions, options);
+    const { width, color } = (Object as any).assign({}, defaultRugPlotOptions, options);
 
     // add padding between the axis and data for our rug plot to exist
     let newRange: [number, number];
@@ -76,7 +78,7 @@ const axisRugPlot = (
                 .attr("y2", y2(d))
                 .attr("x2", x2(d))
                 .attr("class", "rug")
-                .style('stroke', 'currentColor')
+                .style('stroke', color)
         });
 
         // proxy through the content to the original axis;
@@ -88,13 +90,13 @@ const leftAxisRugPlot = (
     axis: Axis<any>,
     data: any[] = [],
     options: RugPlotOptions = {}
-) => axisRugPlot(axis, AxisType.LEFT, data, options);
+) => axisRugPlot(AxisType.LEFT, axis, data, options);
 
 const bottomAxisRugPlot = (
     axis: Axis<any>,
     data: any[] = [],
     options: RugPlotOptions = {}
-) => axisRugPlot(axis, AxisType.BOTTOM, data, options);
+) => axisRugPlot(AxisType.BOTTOM, axis, data, options);
 
 export default {
     AxisType,
