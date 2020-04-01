@@ -28,7 +28,7 @@ TODOS:
 
 */
 
-const axisRugPlot = (
+const rugPlotAxis = (
         type: AxisType,
         axis: Axis<any>,
         data: any[] = [],
@@ -86,21 +86,21 @@ const axisRugPlot = (
     }
 };
 
-const leftAxisRugPlot = (
+const rugPlotAxisLeft = (
     axis: Axis<any>,
     data: any[] = [],
     options: RugPlotOptions = {}
-) => axisRugPlot(AxisType.LEFT, axis, data, options);
+) => rugPlotAxis(AxisType.LEFT, axis, data, options);
 
-const bottomAxisRugPlot = (
+const rugPlotAxisBottom = (
     axis: Axis<any>,
     data: any[] = [],
     options: RugPlotOptions = {}
-) => axisRugPlot(AxisType.BOTTOM, axis, data, options);
+) => rugPlotAxis(AxisType.BOTTOM, axis, data, options);
 
 export default {
     AxisType,
-    leftAxisRugPlot,
-    bottomAxisRugPlot
+    rugPlotAxisLeft,
+    rugPlotAxisBottom
     // axisBarPlot,
 };
