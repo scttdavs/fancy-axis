@@ -17,7 +17,7 @@ import { rugPlot } from "fancy-axis";
 
 // dataset is like [{y: ... }, ...]
 
-let leftAxis = rugPlot.axisLeft(yScale, dataset.map(d => d.y));
+let leftAxis = rugPlot.axisLeft(yScale).datum(dataset).y(d => d.y);
 
 svg.append("g")
     .attr("class", "y axis")
