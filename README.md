@@ -8,16 +8,16 @@ This is a package to draw fancier axis' in D3 for your graphs, based on the visu
 
 ### Rug Plot
 
+Use in place of `d3.axisBottom` and `d3.axisLeft`:
+
 ```ts
-import * as d3 from "d3";
 import { rugPlot } from "fancy-axis";
 
 // create your scale..
 
 // dataset is like [{y: ... }, ...]
 
-let leftAxis = d3.axisLeft(yScale);
-leftAxis = rugPlot.axisLeft(leftAxis, dataset.map(d => d.y));
+let leftAxis = rugPlot.axisLeft(yScale, dataset.map(d => d.y));
 
 svg.append("g")
     .attr("class", "y axis")
@@ -27,8 +27,7 @@ svg.append("g")
 You will need to do both axes for it to display correctly. If you do not want the rug plot on the other axis, you can do the following:
 
 ```js
-let bottomAxis = d3.axisBottom(xScale);
-bottomAxis = rugPlot.axisBottom(bottomAxis);
+let bottomAxis = rugPlot.axisBottom(xScale);
 ```
 
 And it will not render the data, but the padding will be correct.
