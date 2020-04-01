@@ -100,6 +100,10 @@ const rugPlotAxisBottom = (
 
 export default {
     AxisType,
+    rugPlot: {
+        axisLeft: rugPlotAxisLeft,
+        axisBottom: rugPlotAxisBottom,
+    },
     rugPlotAxisLeft,
     rugPlotAxisBottom
     // axisBarPlot,
