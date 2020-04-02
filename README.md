@@ -37,39 +37,37 @@ Use in place of `d3.axisBottom` and `d3.axisLeft`. All methods that are availabl
 rugPlot.axisLeft(yScale).scale(); // returns yScale again
 ```
 
+<img alt="rug plot example" src="./rug-plot-example.png" width="400px">
+
 #### Usage
 
 There are two methods available on the rugPlot axis specific to this library.
 
 Name | type | required | Notes
 --- | --- | --- | ---
-`x` | `y` | func | false | x is available on axisBottom only, and y on axisLeft only. It will be passed each data point and the index as arguments: `(data: any, index: number) => any`
+`x` or `y` | func | false | x is available on axisBottom only, and y on axisLeft only. It will be passed each data point and the index as arguments: `(data: any, index: number) => any`
 `datum` | iterable | true | the data for your graph.
+
+Here is a simple example of how you could use rugPlot to render your axis.
 
 ```ts
 import { rugPlot } from "fancy-axis";
 
-// create your scale..
-
 // dataset is like [{y: ... }, ...]
-
-let leftAxis = rugPlot.axisLeft(yScale).datum(dataset).y(d => d.y);
+const leftAxis = rugPlot.axisLeft(yScale).datum(dataset).y(d => d.y);
 
 svg.append("g")
     .attr("class", "y axis")
-    .call(leftAxis); // Create an axis component with d3.axisLeft
+    .call(leftAxis);
 ```
 
-You will need to do both axes for it to display correctly. If you do not want the rug plot on the other axis, you can do the following:
+You will need to do both axes for it to display correctly. If you do not want the rug plot on the other axis, you can omit the datum from it:
 
 ```js
 let bottomAxis = rugPlot.axisBottom(xScale);
 ```
 
 And it will not render the data, but the padding will be correct.
-
-
-<img alt="rug plot example" src="./rug-plot-example.png" width="400px">
 
 #### Options
 
