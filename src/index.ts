@@ -13,11 +13,13 @@ type AxisContent = Selection<SVGSVGElement, any, any, any> | Selection<SVGGEleme
 type RugPlotOptions = {
     width?: number;
     color?: string;
+    strokeWidth?: number;
 }
 
 const defaultRugPlotOptions: RugPlotOptions = {
     width: 10,
     color: 'currentColor',
+    strokeWidth: 1,
 }
 
 /*
@@ -53,7 +55,11 @@ const rugPlotAxis = (
         const scale = axis.scale() as ScaleContinuousNumeric<any, any>;
         const [currMinRange, currMaxRange] = scale.range();
 
-        const { width, color } = (Object as any).assign({}, defaultRugPlotOptions, options);
+        const {
+            width,
+            color,
+            strokeWidth
+        } = (Object as any).assign({}, defaultRugPlotOptions, options);
 
         // add padding between the axis and data for our rug plot to exist
         let newRange: [number, number];
@@ -101,6 +107,7 @@ const rugPlotAxis = (
                 .attr("x2", x2(data))
                 .attr("class", "rug")
                 .style('stroke', color)
+                .style('stroke-width', strokeWidth)
         });
 
         axis(context);

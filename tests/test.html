@@ -9,6 +9,11 @@
             stroke: red;
             stroke-width: 1;
         }
+
+        .label {
+            font-family: sans-serif;
+            font-size: 10px;
+        }
             
         .overlay {
             fill: none;
@@ -18,7 +23,6 @@
         /* Style the dots by assigning a fill and stroke */
         .dot {
             fill: red;
-            stroke: #fff;
         }
             
             .focus circle {
@@ -32,34 +36,36 @@
         <!-- Load in the d3 library -->
         <script src="https://d3js.org/d3.v5.js"></script>
         <script src="../dist/index.js"></script>
+        <script src="./old-faithful-geyser.js"></script>
         <script type="module">
             var fa = fancyAxis.default;
             // 2. Use the margin convention practice 
             var margin = {top: 50, right: 50, bottom: 50, left: 50}
-            , width = window.innerWidth - margin.left - margin.right // Use the window's width 
-            , height = window.innerHeight - margin.top - margin.bottom; // Use the window's height
+            , width = 500 - margin.left - margin.right // Use the window's width 
+            , height = 500 - margin.top - margin.bottom; // Use the window's height
 
             // The number of datapoints
             var n = 500;
+            var dataset = GEYSER; // loaded from old-faithful-geyser.js
 
             // 5. X scale will use the index of our data
             var xScale = d3.scaleLinear()
-                .domain([0, n-1]) // input
+                .domain([d3.min(dataset.map(d => d[0])), d3.max(dataset.map(d => d[0]))]) // input
                 .range([0, width]); // output
 
             // 6. Y scale will use the randomly generate number 
             var yScale = d3.scaleLinear()
-                .domain([0, 1]) // input 
+                .domain([d3.min(dataset.map(d => d[1])), d3.max(dataset.map(d => d[1]))]) // input
                 .range([height, 0]); // output 
 
             // 7. d3's line generator
             var line = d3.line()
-                .x(function(d) { return xScale(d.x); }) // set the x values for the line generator
-                .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
+                .x(function(d) { return xScale(d[0]); }) // set the x values for the line generator
+                .y(function(d) { return yScale(d[1]); }) // set the y values for the line generator 
                 .curve(d3.curveMonotoneX) // apply smoothing to the line
 
             // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-            var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)(), "x": d3.randomUniform(0, n - 1)() } })
+            // var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)(), "x": d3.randomUniform(0, n - 1)() } })
 
             // 1. Add the SVG to the page and employ #2
             var svg = d3.select("body").append("svg")
@@ -70,18 +76,47 @@
 
             // 3. Call the x axis in a group tag
             // let bottomAxis = d3.axisBottom(xScale);
-            let bottomAxis = fa.rugPlot.axisBottom(xScale, { width: 5, color: "rgba(0,0,0,0.1)" }).datum(dataset).x((d) => d.x);
+            let bottomAxis = fa.rugPlot
+                .axisBottom(xScale, {
+                    width: 10,
+                    color: "rgba(0,0,0,0.1)",
+                    strokeWidth: 2,
+                })
+                .datum(dataset).x((d) => d[0]);
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
                 .call(bottomAxis); // Create an axis component with d3.axisBottom
 
+            svg.append("text")
+                .attr("class", "label")            
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - margin.left + 5)
+                .attr("x",0 - (height / 2))
+                .attr("dy", "1em")
+                .style("text-anchor", "middle")
+                .text("Time till next eruption (mins)");
+
             // 4. Call the y axis in a group tag
             // let leftAxis = d3.axisLeft(yScale);
-            let leftAxis = fa.rugPlot.axisLeft(yScale, { width: 5, color: "rgba(0,0,0,0.1)" }).datum(dataset).y(d => d.y);
+            let leftAxis = fa.rugPlot
+                .axisLeft(yScale, {
+                    width: 10,
+                    color: "rgba(0,0,0,0.1)",
+                    strokeWidth: 2,
+                })
+                .datum(dataset).y(d => d[1]);
             svg.append("g")
                 .attr("class", "y axis")
                 .call(leftAxis); // Create an axis component with d3.axisLeft
+
+            svg.append("text")
+                .attr("class", "label")            
+                .attr("transform",
+                      "translate(" + (width /2 ) + " ," + 
+                                    (height + margin.top - 12) + ")")
+                .style("text-anchor", "middle")
+                .text("Eruption Duration (min)");
 
             // 9. Append the path, bind the data, and call the line generator 
             // svg.append("path")
@@ -94,8 +129,8 @@
                 .data(dataset)
             .enter().append("circle") // Uses the enter().append() method
                 .attr("class", "dot") // Assign a class for styling
-                .attr("cx", function(d) { return xScale(d.x) })
-                .attr("cy", function(d) { return yScale(d.y) })
+                .attr("cx", function(d) { return xScale(d[0]) })
+                .attr("cy", function(d) { return yScale(d[1]) })
                 .attr("r", 2)
                 .on("mouseover", function(a, b, c) { 
                         console.log(a) 
