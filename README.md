@@ -32,21 +32,23 @@ You can also load the script directly on the page, and it will be stored globall
 
 ### Rug Plot
 
-Use in place of `d3.axisBottom` and `d3.axisLeft`. All methods that are available on the result of `d3.axisBottom` and `d3.axisLeft` are available on the rug plot as well. So:
-```ts
-rugPlot.axisLeft(yScale).scale(); // returns yScale again
-```
-
 <img alt="rug plot example" src="./rug-plot-example.png" width="400px">
 
 #### Usage
+
+Use in place of `d3.axisBottom` and `d3.axisLeft`. The function signatures are the same, except that rugPlot takes in an optional `options` object to customize the look of your axes (see below).
+
+All methods that are available on the result of `d3.axisBottom` and `d3.axisLeft` are available on the rug plot as well. So:
+```ts
+rugPlot.axisLeft(yScale).scale(); // returns yScale again
+```
 
 There are two methods available on the rugPlot axis specific to this library.
 
 Name | type | required | Notes
 --- | --- | --- | ---
 `x` or `y` | func | false | x is available on axisBottom only, and y on axisLeft only. It will be passed each data point and the index as arguments: `(data: any, index: number) => any`
-`datum` | iterable | true | the data for your graph.
+`datum` | iterable | false | the data for your graph. If not passed, then the axis still render.
 
 Here is a simple example of how you could use rugPlot to render your axis.
 
