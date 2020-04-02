@@ -81,7 +81,7 @@ Name | type | Notes
 `color` | string | css color of the rug 'tassels'
 `strokeWidth` | number | thickness of the rug 'tassels'
 
-These options help create the below graph:
+These options help create the graph seen earlier in this doc:
 ```ts
 const bottomAxis = rugPlot
     .axisBottom(xScale, {
