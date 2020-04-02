@@ -44,6 +44,7 @@ const rugPlotAxis = (
     }
 
     let dataset: any[] | null = null;
+    let getterFunc: DataGetter = (d): any => type === AxisType.LEFT ? d[1] : d[0];
 
     // unfortunately, TS is not happy with anything I try to get this to be recognized as an Axis
     // since we define the axis properties next.
@@ -120,7 +121,6 @@ const rugPlotAxis = (
     }
 
     type DataGetter = (d: any) => any
-    let getterFunc: DataGetter = (d): any => type === AxisType.LEFT ? d[1] : d[0];
     const dataGetter = function (g: (d: any) => any): Axis<any> | DataGetter {
         if (arguments.length) {
             getterFunc = g;
@@ -154,12 +154,12 @@ const rugPlotAxis = (
 const rugPlotAxisLeft = (
     scale: ScaleContinuousNumeric<any, any>,
     options: RugPlotOptions = {}
-) => rugPlotAxis(AxisType.LEFT, scale, options);
+): (context: AxisContent) => void => rugPlotAxis(AxisType.LEFT, scale, options);
 
 const rugPlotAxisBottom = (
     scale: ScaleContinuousNumeric<any, any>,
     options: RugPlotOptions = {}
-) => rugPlotAxis(AxisType.BOTTOM, scale, options);
+): (context: AxisContent) => void => rugPlotAxis(AxisType.BOTTOM, scale, options);
 
 export default {
     AxisType,
