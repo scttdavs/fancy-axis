@@ -2,6 +2,9 @@
     <head>
         <style type="text/css">
         /* 13. Basic Styling with CSS */
+        body {
+            background-color:whitesmoke;
+        }
         
         /* Style the lines by removing the fill and applying a stroke */
         .line {
@@ -40,7 +43,7 @@
         <script type="module">
             var fa = fancyAxis.default;
             // 2. Use the margin convention practice 
-            var margin = {top: 50, right: 50, bottom: 50, left: 50}
+            var margin = {top: 20, right: 20, bottom: 50, left: 50}
             , width = 500 - margin.left - margin.right // Use the window's width 
             , height = 500 - margin.top - margin.bottom; // Use the window's height
 
@@ -114,7 +117,7 @@
                 .attr("class", "label")            
                 .attr("transform",
                       "translate(" + (width /2 ) + " ," + 
-                                    (height + margin.top - 12) + ")")
+                                    (height + margin.top + 18) + ")")
                 .style("text-anchor", "middle")
                 .text("Eruption Duration (min)");
 
