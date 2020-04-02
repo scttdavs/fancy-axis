@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import fs from "fs";
 import path from "path";
 import { rugPlot } from "../src/index";
 import { JSDOM } from "jsdom";
 import { select } from "d3-selection";
 import { scaleLinear } from "d3-scale";
-import { axisLeft } from "d3-axis";
 
-const file = (name: string) => fs.readFileSync(path.join(__dirname, name), "utf8").replace(/\n\s*/mg, "")
+const file = (name: string): string => fs.readFileSync(path.join(__dirname, name), "utf8").replace(/\n\s*/mg, "")
 
 describe("rugPlot", () => {
     afterEach(() => {
@@ -25,7 +25,7 @@ describe("rugPlot", () => {
     });
 
     it("produces the correct output", () => {
-        var bodyExpected = (new JSDOM(file("rug-plot-axis.html"))).window.document.body;
+        const bodyExpected = (new JSDOM(file("rug-plot-axis.html"))).window.document.body;
         document.body.innerHTML = "<!DOCTYPE html><svg><g></g></svg>"
         // @ts-ignore
         select(document.body).select("g").call(rugPlot.axisLeft(scaleLinear().range([0, 500])));
