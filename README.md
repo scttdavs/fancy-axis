@@ -1,6 +1,6 @@
 # FancyAxis
 
-This is a package to draw fancier axis' in D3 for your graphs, based on the visual style of Edward Tufte, and on this previous work done in R:
+This is a package to draw fancier axes in D3 for your graphs, based on the visual style of Edward Tufte, and on this previous work done in R:
 - docs: https://www.cl.cam.ac.uk/~sjm217/projects/graphics/
 - code: https://www.cl.cam.ac.uk/~sjm217/projects/graphics/fancyaxis.R
 
@@ -34,7 +34,7 @@ You can also load the script directly on the page, and it will be stored globall
 
 Use in place of `d3.axisBottom` and `d3.axisLeft`. All methods that are available on the result of `d3.axisBottom` and `d3.axisLeft` are available on the rug plot as well. So:
 ```ts
-    rugPlot.axisLeft(yScale).scale(); // returns yScale again
+rugPlot.axisLeft(yScale).scale(); // returns yScale again
 ```
 
 #### Usage
@@ -42,7 +42,7 @@ Use in place of `d3.axisBottom` and `d3.axisLeft`. All methods that are availabl
 There are two methods available on the rugPlot axis specific to this library.
 
 Name | type | required | Notes
---- | --- | ---
+--- | --- | --- | ---
 `x` | `y` | func | false | x is available on axisBottom only, and y on axisLeft only. It will be passed each data point and the index as arguments: `(data: any, index: number) => any`
 `datum` | iterable | true | the data for your graph.
 
