@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "npx webpack --config webpack.config.js",
+    "prepublishOnly": "npm run build",
     "test": "npx jest ./tests"
   },
   "repository": {
