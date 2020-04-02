@@ -16,6 +16,8 @@ type RugPlotOptions = {
     strokeWidth?: number;
 }
 
+type RugPlot = ((context: AxisContent) => void) & Axis<any>
+
 const defaultRugPlotOptions: RugPlotOptions = {
     width: 10,
     color: 'currentColor',
@@ -34,7 +36,7 @@ const rugPlotAxis = (
         type: AxisType,
         scale: ScaleContinuousNumeric<any, any>,
         options: RugPlotOptions = {}
-    ): (context: AxisContent) => void => {
+    ): RugPlot => {
     let axis: Axis<any>;
     // proxy through the content to the original axis;
     if (type === AxisType.LEFT) {
@@ -154,20 +156,14 @@ const rugPlotAxis = (
 const rugPlotAxisLeft = (
     scale: ScaleContinuousNumeric<any, any>,
     options: RugPlotOptions = {}
-): (context: AxisContent) => void => rugPlotAxis(AxisType.LEFT, scale, options);
+): RugPlot => rugPlotAxis(AxisType.LEFT, scale, options);
 
 const rugPlotAxisBottom = (
     scale: ScaleContinuousNumeric<any, any>,
     options: RugPlotOptions = {}
-): (context: AxisContent) => void => rugPlotAxis(AxisType.BOTTOM, scale, options);
+): RugPlot => rugPlotAxis(AxisType.BOTTOM, scale, options);
 
-export default {
-    AxisType,
-    rugPlot: {
-        axisLeft: rugPlotAxisLeft,
-        axisBottom: rugPlotAxisBottom,
-    },
-    rugPlotAxisLeft,
-    rugPlotAxisBottom
-    // axisBarPlot,
+export const rugPlot = {
+    axisLeft: rugPlotAxisLeft,
+    axisBottom: rugPlotAxisBottom,
 };
