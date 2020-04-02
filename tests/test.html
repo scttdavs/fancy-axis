@@ -70,7 +70,7 @@
 
             // 3. Call the x axis in a group tag
             // let bottomAxis = d3.axisBottom(xScale);
-            let bottomAxis = fa.rugPlot.axisBottom(xScale, { width: 10, color: "rgba(0,0,0,0.1)" }).datum(dataset).x((d) => d.x);
+            let bottomAxis = fa.rugPlot.axisBottom(xScale, { width: 5, color: "rgba(0,0,0,0.1)" }).datum(dataset).x((d) => d.x);
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
@@ -78,7 +78,7 @@
 
             // 4. Call the y axis in a group tag
             // let leftAxis = d3.axisLeft(yScale);
-            let leftAxis = fa.rugPlot.axisLeft(yScale, { width: 10, color: "rgba(0,0,0,0.1)" }).datum(dataset).y(d => d.y);
+            let leftAxis = fa.rugPlot.axisLeft(yScale, { width: 5, color: "rgba(0,0,0,0.1)" }).datum(dataset).y(d => d.y);
             svg.append("g")
                 .attr("class", "y axis")
                 .call(leftAxis); // Create an axis component with d3.axisLeft

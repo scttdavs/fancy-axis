@@ -58,9 +58,9 @@ const rugPlotAxis = (
         // add padding between the axis and data for our rug plot to exist
         let newRange: [number, number];
         if (type === AxisType.LEFT) {
-            newRange = [currMinRange - width * 2, currMaxRange + width * 2];
+            newRange = [currMinRange - width * 3, currMaxRange + width * 3];
         } else {
-            newRange = [currMinRange + width * 2, currMaxRange - width * 2];
+            newRange = [currMinRange + width * 3, currMaxRange - width * 3];
         }
         scale.range(newRange);
 
@@ -82,8 +82,8 @@ const rugPlotAxis = (
             y1 = y2 = passThrough;
         } else {
             x1 = x2 = passThrough;
-            y1 = (): number => newRange[0] - width * 3;
-            y2 = (): number => newRange[0] - width * 2;
+            y1 = (): number => newRange[0] - width * 5;
+            y2 = (): number => newRange[0] - width * 4;
         }
 
         const rug = context
