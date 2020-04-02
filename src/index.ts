@@ -46,6 +46,7 @@ const rugPlotAxis = (
     }
 
     let dataset: any[] | null = null;
+    type DataGetter = (d: any, i?: number) => any
     let getterFunc: DataGetter = (d): any => type === AxisType.LEFT ? d[1] : d[0];
 
     // unfortunately, TS is not happy with anything I try to get this to be recognized as an Axis
@@ -100,8 +101,8 @@ const rugPlotAxis = (
             .attr("opacity", 1)
             .attr("class", "fancy-axis-rug-plot");
 
-        (dataset || []).forEach((d) => {
-            const data = getterFunc(d);
+        (dataset || []).forEach((d, i) => {
+            const data = getterFunc(d, i);
             rug
                 .append("line")
                 .attr("y1", y1(data))
@@ -122,7 +123,6 @@ const rugPlotAxis = (
         axisProxy[prop] = axis[prop];
     }
 
-    type DataGetter = (d: any) => any
     const dataGetter = function (g: (d: any) => any): Axis<any> | DataGetter {
         if (arguments.length) {
             getterFunc = g;
