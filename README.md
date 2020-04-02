@@ -37,7 +37,7 @@ Use in place of `d3.axisBottom` and `d3.axisLeft`. All methods that are availabl
     rugPlot.axisLeft(yScale).scale(); // returns yScale again
 ```
 
-![rug plot example](./rug-plot-example.png)
+<img alt="rug plot example" src="./rug-plot-example.png" width="400px">
 
 #### Options
 
