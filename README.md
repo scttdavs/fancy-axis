@@ -37,30 +37,6 @@ Use in place of `d3.axisBottom` and `d3.axisLeft`. All methods that are availabl
     rugPlot.axisLeft(yScale).scale(); // returns yScale again
 ```
 
-<img alt="rug plot example" src="./rug-plot-example.png" width="400px">
-
-#### Options
-
-Passing these options can help customize the rug plot.
-
-Name | type | Notes
---- | --- | ---
-`width` | number | width of the rug 'tassels'
-`color` | string | css color of the rug 'tassels'
-`strokeWidth` | number | thickness of the rug 'tassels'
-
-These options help create the below graph:
-```ts
-const bottomAxis = rugPlot
-    .axisBottom(xScale, {
-        width: 10,
-        color: "rgba(0, 0, 0, 0.1)",
-        strokeWidth: 2,
-    })
-    .datum(dataset)
-    .x((d) => d[0]);
-```
-
 #### Usage
 
 There are two methods available on the rugPlot axis specific to this library.
@@ -91,3 +67,28 @@ let bottomAxis = rugPlot.axisBottom(xScale);
 ```
 
 And it will not render the data, but the padding will be correct.
+
+
+<img alt="rug plot example" src="./rug-plot-example.png" width="400px">
+
+#### Options
+
+Passing these options can help customize the rug plot.
+
+Name | type | Notes
+--- | --- | ---
+`width` | number | width of the rug 'tassels'
+`color` | string | css color of the rug 'tassels'
+`strokeWidth` | number | thickness of the rug 'tassels'
+
+These options help create the below graph:
+```ts
+const bottomAxis = rugPlot
+    .axisBottom(xScale, {
+        width: 10,
+        color: "rgba(0, 0, 0, 0.1)",
+        strokeWidth: 2,
+    })
+    .datum(dataset)
+    .x((d) => d[0]);
+```
