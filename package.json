@@ -1,6 +1,6 @@
 {
   "name": "fancy-axis",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An implementation of some https://www.cl.cam.ac.uk/~sjm217/projects/graphics/ features in D3.js",
   "main": "dist/index.js",
   "scripts": {
